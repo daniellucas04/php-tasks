@@ -30,5 +30,10 @@ if ( isset($uri) ) {
     require_once("src/pages/inicio.php");
 }
 require_once('./utils/footer.html');
+
+// Importa o JS das páginas
+if ( empty($uri) ) {
+    echo '<script src="./js/pages/inicio.js"></script>';
+}
 ?>
 </body>
