@@ -6,6 +6,9 @@ class Api {
     public static $method;
     private $response;
     private $error;
+    private $data;
+    private $defaultOptions;
+    private $methodOptions;
     private $baseURL = 'http://localhost:3333';
 
     public function getResponse() {
@@ -16,30 +19,47 @@ class Api {
         return $this->error;
     }
 
-    public function request($endpoint){
+    public function request($endpoint, $data = null){
         $url = $this->baseURL . "/$endpoint";
+        $this->data = $data;
+
         $this->execCurl($url);
     }
 
     private function execCurl($url) {
         $curl = curl_init();
 
-        $options = [
+        $this->defaultOptions = [
             CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => $this::$method,
-            CURLOPT_HEADER => false
         ];
+        $this->setOptions();
+        $options = $this->defaultOptions + $this->methodOptions;
 
         curl_setopt_array($curl, $options);
 
         $this->response = curl_exec($curl);
         $this->error = curl_error($curl);
         $curl = curl_close($curl);
+    }
+
+    private function setOptions() {
+        if ( $this::$method == 'GET' ) {
+            $this->methodOptions = [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_HEADER => false,
+            ];
+        } else if ( $this::$method == 'PUT' ) {
+            $data = '{ "status": "' . $this->data['status'] . '", "title": "' . $this->data['title'] . '" }';
+            $this->methodOptions = [
+                CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+                CURLOPT_POSTFIELDS => $data
+            ];
+        }
     }
 }
