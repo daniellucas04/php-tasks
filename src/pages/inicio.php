@@ -11,10 +11,7 @@
 
         $api::$method = 'PUT';
         $api->request('tasks/' . $postForm['id'], $postForm);
-        if ( !$api->getError() ) {
-            // Sucesso
-            echo '<div class="alert alert-success">Sucesso ao atualizar os dados da tarefa!</div>';
-        } else {
+        if ( $api->getError() ) {
             // Erro
             echo '<div class="alert alert-danger">Erro ao atualizar os dados da tarefa!</div>';
         }
@@ -53,25 +50,16 @@
                 default:
                     $status = 'light';
                     break;
-            }
-
-            echo "<form action='/' method='post'>",
-                    "<div class='card text-bg-light mb-3' style='max-width: 18rem;'>",
-                    "<div class='card-header text-bg-$status d-flex align-items-center gap-2'>$icon <strong>$taskStatus</strong> - $taskCreatedAt</div>",
-                    "<div class='card-body d-flex align-items-center justify-content-between gap-2'>",
-                    " <h5 class='card-title'>$taskTitle</h5>",
-                    " <button class='click-icon' type='submit'><ion-icon name='arrow-forward'></ion-icon></button>",
-                    " <input type='hidden' name='id' value='$taskID'>",
-                    " <input type='hidden' name='title' value='$taskTitle'>",
-                    " <input type='hidden' name='status' value='$inputValue'>",
-                    "</div>",
-                    "</div>",
-                    "</form>";
+                }
+                
+            require "./utils/components/taskCard.php";
         }
     } else {
         // Erro
         echo '<div class="alert alert-danger"><ion-icon name="close-circle-outline"></ion-icon> Ooops! Ocorreu um erro ao tentar recuperar suas tarefas.</div>';
     }
+
+    require_once "./utils/components/taskButton.php";
     ?>
     </div>
 </article>

@@ -7,8 +7,24 @@ class Functions {
      * @param string $url = link para o qual o usuário será redirecionado
      * @param int $number = tempo que levará para o usuário ser redirecionado
      */
-    public static function location($url, $timeout) {
-        echo "<script>setTimeout(function(){window.location = 'http://website.localhost/$url'}, $timeout)</script>";
+    public static function location($url = '', $timeout = 0) {
+        echo "<script>setTimeout(function(){window.location = 'http://tasks.localhost/$url'}, $timeout)</script>";
+    }
+
+    /**
+     * Recarrega a página
+     */
+    public static function reload() {
+        session_start();
+        if (!isset($_SESSION['reloaded'])) {
+            // Sua lógica aqui
+
+            // Define a variável de sessão
+            $_SESSION['reloaded'] = true;
+
+            // Recarrega a página
+            echo '<script type="text/javascript">location.reload();</script>';
+        }
     }
 
     /**
@@ -27,5 +43,7 @@ class Functions {
         $date = explode(' ', $date);
         return $date[0];
     }
+
+
 }
 ?>

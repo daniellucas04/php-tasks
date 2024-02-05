@@ -50,7 +50,6 @@ class Statements extends Database {
         $this->table = $table;
         $this->conditions = $conditions;
         $query = "DELETE FROM $this->table $this->conditions";
-        var_dump($query);
         
         $executeQuery = $connection->prepare($query);
         $executeQuery->execute();
@@ -64,7 +63,6 @@ class Statements extends Database {
         $this->conditions = $conditions;
         $this->setUpdateFields();
         $query = "UPDATE $this->table SET $this->fields $this->conditions";
-        var_dump($query);
         $executeQuery = $connection->prepare($query);
         $executeQuery->execute();
         $this->result = $executeQuery->rowCount();
