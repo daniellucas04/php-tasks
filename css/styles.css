@@ -12,3 +12,14 @@ ion-icon { font-size: 32px; }
 .click-icon { transition: all 150ms ease-in-out }
 .click-icon:hover { cursor: pointer; color: rgb(36, 255, 47); }
 button { background: transparent; border: none; outline: none; }
+
+/* Create button */
+#createTask { color: white; display: flex; align-items: center; gap: 4px; border: 2px solid white; border-radius: 4px; padding: 6px 12px; transition: all 150ms ease-in-out; margin: 8px; }
+#createTask:hover { color: black; background-color: white; }
+
+/* Task card */
+.taskCard { min-width: 30rem; max-width: 30rem; max-height: 12rem; min-height: 12rem; background-color: #2c3238; border: 1px solid white; border-top-right-radius: 4px; border-top-left-radius: 4px; padding: 5px 10px; border-bottom: 0; }
+.taskCard > .title { background-color: transparent; border: none; outline: none; color: white; font-size: 2rem; font-weight: 700; }
+.taskCard > .title:focus { text-decoration: underline; }
+.status { width: 100%; background-color: inherit; padding: 4px; border-radius: 0px 0px 4px 4px; border: 1px solid white; border-top: 0; }
+.card-container { width: fit-content; display: flex; align-items: start; flex-direction: column; margin: 8px; transition: all 150ms ease-in; }

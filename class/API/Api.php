@@ -31,7 +31,7 @@ class Api {
 
         $this->defaultOptions = [
             CURLOPT_URL => $url,
-            CURLOPT_CUSTOMREQUEST => $this::$method,
+            CURLOPT_CUSTOMREQUEST => self::$method,
         ];
         $this->setOptions();
         $options = $this->defaultOptions + $this->methodOptions;
@@ -44,7 +44,7 @@ class Api {
     }
 
     private function setOptions() {
-        if ( $this::$method == 'GET' ) {
+        if ( self::$method == 'GET' ) {
             $this->methodOptions = [
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
@@ -54,10 +54,17 @@ class Api {
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_HEADER => false,
             ];
-        } else if ( $this::$method == 'PUT' ) {
+        } else if ( self::$method == 'PUT' ) {
             $data = '{ "status": "' . $this->data['status'] . '", "title": "' . $this->data['title'] . '" }';
             $this->methodOptions = [
                 CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+                CURLOPT_POSTFIELDS => $data
+            ];
+        } else if ( self::$method == 'POST' ) {
+            $data = '{ "status": "' . $this->data['status'] . '", "title": "' . $this->data['title'] . '" }';
+            $this->methodOptions = [
+                CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+                CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_POSTFIELDS => $data
             ];
         }
